@@ -1,0 +1,41 @@
+{
+  "name": "assignment_4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+"scripts": {
+  "dev": "ts-node-dev --respawn --transpile-only -- ./src/app.ts",
+  "build": "tsc -p tsconfig.json",
+  "start": "node dist/app.js",
+  "test": "jest --passWithNoTests"
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rsharma722/Backend_Assignment_04.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rsharma722/Backend_Assignment_04/issues"
+  },
+  "homepage": "https://github.com/rsharma722/Backend_Assignment_04#readme",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "morgan": "^1.10.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/jest": "^30.0.0",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^24.9.1",
+    "@types/supertest": "^6.0.3",
+    "jest": "^30.2.0",
+    "supertest": "^7.1.4",
+    "ts-jest": "^29.4.5",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  }
+}
