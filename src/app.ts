@@ -1,5 +1,7 @@
 import express from "express";
 import loansRouter from "./api/v1/routes/loans.routes";
+import usersRouter from "./api/v1/routes/users.routes";
+import adminRouter from "./api/v1/routes/admin.routes";
 import errorHandler, { notFound } from "./api/v1/middleware/errorHandler";
 import { applyLogging } from "./api/v1/middleware/logger";
 
@@ -9,11 +11,11 @@ applyLogging(app);
 
 app.use(express.json());
 
-app.get("/api/v1/health", (_req, res) => {
-  res.json({ ok: true });
-});
-
+app.get("/api/v1/health", (_req, res) => res.json({ ok: true }));
 app.use("/api/v1/loans", loansRouter);
+app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/admin", adminRouter);
+
 app.use(notFound);
 app.use(errorHandler);
 
