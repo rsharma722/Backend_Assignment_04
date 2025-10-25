@@ -6,6 +6,7 @@ jest.mock("../src/config/firebaseConfig", () => ({
 auth: {
     setCustomUserClaims: jest.fn(),
     getUser: jest.fn(),
+    verifyIdToken: jest.fn(),
 },
 }));
 
@@ -42,19 +43,24 @@ test("should set custom claims successfully", async () => {
 });
 
 test("should get user info successfully", async () => {
-    (auth.getUser as jest.Mock).mockResolvedValueOnce({
+(auth.verifyIdToken as jest.Mock).mockResolvedValueOnce({ uid: "admin-1", role: "admin" });
+
+(auth.getUser as jest.Mock).mockResolvedValueOnce({
     uid: UID,
     email: "admin@test.com",
     customClaims: { role: "admin" },
-    });
-
-    const res = await request(app).get(`/api/v1/users/${UID}`);
-
-    expect(res.status).toBe(HTTP.OK);
-    expect(auth.getUser).toHaveBeenCalledWith(UID);
-    expect(res.body.data.uid).toBe(UID);
-    expect(res.body.data.customClaims.role).toBe("admin");
 });
+
+const res = await request(app)
+    .get(`/api/v1/users/${UID}`)
+    .set("Authorization", "Bearer valid-admin-token");
+
+expect(res.status).toBe(HTTP.OK);
+expect(auth.getUser).toHaveBeenCalledWith(UID);
+expect(res.body.data.uid).toBe(UID);
+expect(res.body.data.customClaims.role).toBe("admin");
+});
+
 
 test("should handle error when setting custom claims", async () => {
     (auth.setCustomUserClaims as jest.Mock).mockRejectedValueOnce(new Error("failed"));
