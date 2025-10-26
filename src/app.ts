@@ -14,7 +14,12 @@ applyLogging(app);
 app.use(express.json());
 
 app.get("/api/v1/health", (_req, res) => res.json({ ok: true }));
-app.use("/api/v1/loans", loansRouter);
+app.use(
+  "/api/v1/loans",
+  authenticate,
+  authorize(["admin", "manager"]),
+  loansRouter
+);
 app.use("/api/v1/users", authenticate, authorize(["admin"]), usersRouter);
 app.use("/api/v1/admin", authenticate, authorize(["admin"]), adminRouter);
 
