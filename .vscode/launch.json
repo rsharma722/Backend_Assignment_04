@@ -7,6 +7,7 @@
             "name": "Debug Server",
             "runtimeArgs": ["-r", "ts-node/register"],
             "program": "${workspaceFolder}/src/server.ts",
+            "sourceMaps": true,
             "console": "integratedTerminal"
         },
         {
